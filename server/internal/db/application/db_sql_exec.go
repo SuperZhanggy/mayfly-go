@@ -146,6 +146,9 @@ func (d *dbSqlExecAppImpl) Exec(ctx context.Context, execSqlReq *DbSqlExecReq) (
 		execRes, err = d.doDelete(ctx, stmt, execSqlReq, dbSqlExecRecord)
 	case *sqlparser.Insert:
 		execRes, err = d.doInsert(ctx, stmt, execSqlReq, dbSqlExecRecord)
+	case *sqlparser.ExplainTab:
+		isSelect = true
+		execRes, err = d.doRead(ctx, execSqlReq)
 	case *sqlparser.Union:
 		isSelect = true
 		execRes, err = d.doRead(ctx, execSqlReq)
